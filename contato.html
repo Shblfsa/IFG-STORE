@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon (1).ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <title>Contato</title>
+    <style>
+        body{
+            background-color: bisque ;
+        }
+    </style>
+</head>
+<body>
+    <div class="contato">
+    <img src="carta.png" width="300" height="300" alt="Logo IFG">
+    <form class="form" method="post" action="sucesso-contato-2.html">
+     <label>Nome:</label>
+     <input type="text" name="nome" required autofocus>
+     <label>E-mail:</label>
+     <input type="email" name="email" required>
+     <label>Telefone:</label>
+     <input type="tel" name="telefone" required
+       pattern="[0-9]{11}">
+       <select name="cor" required>
+       <option value="azul">selecione</option>
+       <option value="vermelho">Troca</option>
+       <option value="verde">Reclamação</option>
+     </select><br>
+     <textarea name="mensagem" rows="4" cols="50" required></textarea>
+     <input type="submit" value="Enviar">
+     <input type="reset" value="Redefinir">
+
+    </form>
+
+</div>
+    
+</body>
+</html>

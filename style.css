@@ -1,0 +1,149 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;}
+
+body{
+    background-color: grey;
+    min-height: 100vh;}
+
+.inicial {
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+    border: 10px solid black;
+    align-items: center;}
+
+.inicial a{
+    color: black;}
+
+.cabecalho{
+    display: flex;
+    flex-direction: column;
+    align-items: center;}
+
+.cabecalho-2{
+    display: flex;
+    flex-direction: column;}
+
+.itens-2{
+    display: flex;
+    align-items: center;
+    gap: 10px;}
+
+.cabecalho-3{
+    display: flex;
+    flex-direction: column;}
+
+.itens-3{
+    display: flex;
+    align-items: center;
+    gap: 10px;}
+   
+  
+
+.menu a {
+    color: black;}
+
+.produtos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;}
+
+.produto {
+    border: 1px solid black;
+    padding: 10px;}
+
+.produto input {
+    width: 150px;
+    height: 35px;
+    background-color: green;}
+
+.rodape{
+    display: grid;
+    flex-direction: column;
+    padding: 10px;}
+
+.rodape a{
+    color:black;
+    padding: 10px;}
+
+.carrinho {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;}
+
+.carrinho-item-1{
+    border: 2px solid black;
+    padding: 5px;}
+
+.carrinho-item-3 {
+    height: 300px;
+    border: 1px solid black;}
+
+.carrinho-item-3 button{
+    width: 150px;
+    height: 35px;
+    background-color: green;}
+
+.carrinho-item-2 input{
+    width: 150px;
+    height: 30px;
+    background-color: green;
+    margin-left: 10px;
+    margin-top: 300px;}
+
+.carrinho-item-3 img{
+    margin-left: 150px;}
+
+
+.sucesso-pedido {
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+    border: 10px solid black;
+    align-items: center;
+    background-color: bisque;}
+
+.sucesso-pedido a{
+    color: black;
+    font-size: 20px;}
+
+
+
+.sucesso-2 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 10px solid black;
+    align-items: center;
+    background-color: bisque;}
+
+.item-sucesso-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;}
+
+.contato{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    background-color: bisque;}
+
+.form{
+    display:flex;
+    flex-direction: column;
+    gap:10px;}
+
+
+
