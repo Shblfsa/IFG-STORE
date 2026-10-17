@@ -1,72 +1,271 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon (1).ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <title>Carrinho</title>
+    <title>IFG STORE - Carrinho</title>
+    <link rel="icon" href="favicon (1).ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="cabecalho-3">
-     <div class="itens-3">
-       <img src="IFG.png" width="150" height="150" alt="Logo IFG">
-        <div class="menu">
-        <a href="minhaconta.html"> |Minha conta |</a>
-        <a href="index.html"> | Voltar á pagina inicial |</a>
-        <a href="Sair.html"> | Sair |</a></div>
-        <input type="text" name="nome" required autofocus/>
-        <input type="button" value="Pesquisar"></div>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="IFG.png" width="65" alt="Logo IFG"> IFG STORE
+            </a>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="produtos.html">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                </ul>
+                <a href="carrinho.html" class="nav-link text-white me-4">
+                    <i id="iconeCarrinho" class="bi bi-cart fs-4"></i>
+                    <span id="contadorCarrinho" class="badge bg-danger">0</span>
+                </a>
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle"
+                            data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle fs-4"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" id="menuUsuario"></ul>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <div class="carrinho">
-     <div class="carrinho-item-1">
-      <h4>Notbook DELL</h4>
-      <img src="dell.png"
-                width="200"
-                height="200">
-       <p><b>DESCRIÇÃO:</b> Notbook DELL última geração</p>
-       <p>8 GB RAM</p>
-       <p>1 TB HD</p>
-       <p>Processador intel core 5</p>
-       <p><b>R$ 3099,99</b></p>
-       <h4>Notbook DELL</h4>
-       <img src="computador.jpg"  
-                 width="200"
-                 height="200"
-                 alt="Livro Código Limpo">
-        <p><b>DESCRIÇÃO:</b> Notbook DELL última geração</p>
-        <p>16 GB RAM</p>
-        <p>1 TB SSD</p>
-        <p>Processador intel core 5</p>
-        <p><b>R$ 4099,99</b></p></div>
-       
-     <div class="carrinho-item-2">
-        <input type="button" value="Quantidade: (2x)"></div>
-        
+    <main class="container my-5">
+        <h1 class="mb-4">Meu Carrinho</h1>
 
-     <div class="carrinho-item-3">
-        <h4>RESUMO DO PEDDO:</h4>
-        <img src="carrinho.png"
-                  width="200"
-                  height="200"
-                  alt="Livro Código Limpo">
-       <p><b>TOTAL DE ITENS:</b> ( 2 )</p>
-        <p><b>VALOR TOTAL: R$ 7.199,98</b></p>
-        <button onclick="window.location.href='sucesso-pedido.html'">
-          Finalizar Compra</button></div>
-    </div>
-    <footer class="rodape">
-        <a href="https://www.facebook.com"> |Facebook |</a>
-        <a href="https://www.instagram.com"> |Instagram |</a>
-        <a href="https://www.tiktok.com"> |Tiktok |</a>
-        <p>© 2026 - IFG STORE</p>
-</footer>
+        <div class="row g-4">
+            <div class="col-lg-8" id="listaCarrinho"></div>
 
-     
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4>Resumo do pedido</h4>
+                        <hr>
+                        <h5>Total: <span id="totalCarrinho">R$ 0,00</span></h5>
+                        <button class="btn btn-success w-100 mt-3"
+                                onclick="finalizarPedido()">
+                            Finalizar pedido
+                        </button>
+                        <a href="produtos.html" class="btn btn-outline-secondary w-100 mt-2">
+                            Continuar comprando
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
+    <footer class="rodape bg-dark text-white text-center p-4 mt-auto">
+        <p>Redes sociais:
+            <a href="https://www.facebook.com/" class="text-white mx-2">Facebook</a>
+            <a href="https://www.instagram.com/" class="text-white mx-2">Instagram</a>
+            <a href="https://www.tiktok.com/" class="text-white mx-2">TikTok</a>
+        </p>
+        <p class="mb-0">&copy; 2026 IFG STORE</p>
+    </footer>
 
-    
-       
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let produtos = [
+            { id: 1, nome: "Notebook DELL - 8 GB", preco: 3099.99, imagem: "dell.png" },
+            { id: 2, nome: "Notebook DELL - 16 GB", preco: 4099.99, imagem: "computador.jpg" },
+            { id: 3, nome: "Notebook DELL - 32 GB", preco: 5099.99, imagem: "comp.png" }
+        ];
+
+        function atualizarMenuUsuario() {
+            let menu = document.getElementById("menuUsuario");
+            let usuario = localStorage.getItem("usuarioLogado");
+
+            if (usuario) {
+                menu.innerHTML =
+                    '<li><a class="dropdown-item" href="meus-dados.html">Meus Dados</a></li>' +
+                    '<li><a class="dropdown-item" href="meus-pedidos.html">Meus Pedidos</a></li>' +
+                    '<li><button class="dropdown-item" onclick="sair()">Sair</button></li>';
+            } else {
+                menu.innerHTML =
+                    '<li><a class="dropdown-item" href="novo_usuario.html">Cadastrar</a></li>' +
+                    '<li><a class="dropdown-item" href="login.html">Entrar</a></li>';
+            }
+        }
+
+        function sair() {
+            localStorage.removeItem("usuarioLogado");
+            window.location.href = "index.html";
+        }
+
+        function obterCarrinho() {
+            return JSON.parse(localStorage.getItem("carrinho") || "[]");
+        }
+
+        function atualizarCarrinho() {
+            let carrinho = obterCarrinho();
+            let quantidade = carrinho.reduce(function(soma, item) {
+                return soma + item.quantidade;
+            }, 0);
+
+            document.getElementById("contadorCarrinho").textContent = quantidade;
+            document.getElementById("iconeCarrinho").className =
+                quantidade > 0 ? "bi bi-cart-fill fs-4" : "bi bi-cart fs-4";
+        }
+
+        function formatarPreco(valor) {
+            return valor.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            });
+        }
+
+        function mostrarCarrinho() {
+            let carrinho = obterCarrinho();
+            let lista = document.getElementById("listaCarrinho");
+            let total = 0;
+
+            lista.innerHTML = "";
+
+            if (carrinho.length === 0) {
+                lista.innerHTML =
+                    '<div class="alert alert-info">' +
+                        'Seu carrinho está vazio.' +
+                    '</div>';
+            }
+
+            carrinho.forEach(function(item) {
+                let produto = produtos.find(function(p) {
+                    return p.id === item.id;
+                });
+
+                if (!produto) {
+                    return;
+                }
+
+                let subtotal = produto.preco * item.quantidade;
+                total += subtotal;
+
+                lista.innerHTML +=
+                    '<div class="card shadow-sm mb-3">' +
+                        '<div class="card-body">' +
+                            '<div class="row align-items-center g-3">' +
+                                '<div class="col-md-3">' +
+                                    '<img src="' + produto.imagem + '" class="img-fluid" alt="Notebook">' +
+                                '</div>' +
+                                '<div class="col-md-9">' +
+                                    '<h5>' + produto.nome + '</h5>' +
+                                    '<p>Preço unitário: ' + formatarPreco(produto.preco) + '</p>' +
+                                    '<p>Quantidade: ' +
+                                        '<button class="btn btn-outline-secondary btn-sm" onclick="alterarQuantidade(' + produto.id + ', -1)">-</button> ' +
+                                        item.quantidade + ' ' +
+                                        '<button class="btn btn-outline-secondary btn-sm" onclick="alterarQuantidade(' + produto.id + ', 1)">+</button>' +
+                                    '</p>' +
+                                    '<p><strong>Subtotal: ' + formatarPreco(subtotal) + '</strong></p>' +
+                                    '<button class="btn btn-danger btn-sm" onclick="removerProduto(' + produto.id + ')">' +
+                                        '<i class="bi bi-trash"></i> Remover' +
+                                    '</button>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+            });
+
+            document.getElementById("totalCarrinho").textContent = formatarPreco(total);
+            atualizarCarrinho();
+        }
+
+        function alterarQuantidade(id, alteracao) {
+            let carrinho = obterCarrinho();
+
+            let item = carrinho.find(function(p) {
+                return p.id === id;
+            });
+
+            if (item) {
+                item.quantidade += alteracao;
+
+                if (item.quantidade <= 0) {
+                    carrinho = carrinho.filter(function(p) {
+                        return p.id !== id;
+                    });
+                }
+            }
+
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+            mostrarCarrinho();
+        }
+
+        function removerProduto(id) {
+            let carrinho = obterCarrinho();
+
+            carrinho = carrinho.filter(function(item) {
+                return item.id !== id;
+            });
+
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+            mostrarCarrinho();
+        }
+
+        function finalizarPedido() {
+            let carrinho = obterCarrinho();
+
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+
+            let usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+
+            if (!usuario) {
+                alert("Faça login para finalizar o pedido!");
+                window.location.href = "login.html";
+                return;
+            }
+
+            let total = 0;
+            let itensPedido = [];
+
+            carrinho.forEach(function(item) {
+                let produto = produtos.find(function(p) {
+                    return p.id === item.id;
+                });
+
+                if (produto) {
+                    total += produto.preco * item.quantidade;
+
+                    itensPedido.push({
+                        id: produto.id,
+                        nome: produto.nome,
+                        preco: produto.preco,
+                        quantidade: item.quantidade
+                    });
+                }
+            });
+
+            let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
+
+            pedidos.push({
+                usuarioEmail: usuario.email,
+                data: new Date().toLocaleString("pt-BR"),
+                itens: itensPedido,
+                total: total
+            });
+
+            localStorage.setItem("pedidos", JSON.stringify(pedidos));
+            localStorage.removeItem("carrinho");
+
+            window.location.href = "sucesso-pedido.html";
+        }
+
+        atualizarMenuUsuario();
+        mostrarCarrinho();
+    </script>
 </body>
 </html>
