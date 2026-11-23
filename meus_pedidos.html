@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meus Pedidos | IFG STORE</title>
+    <link rel="icon" href="favicon (1).ico">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="IFG.png" alt="IFG" width="55"> IFG STORE
+            </a>
+
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="produtos.html">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                </ul>
+
+                <a href="carrinho.html" class="text-white text-decoration-none me-4">
+                    <i id="iconeCarrinho" class="bi bi-cart fs-4"></i>
+                    <span id="contadorCarrinho" class="badge bg-danger">0</span>
+                </a>
+
+                <div class="dropdown">
+                    <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end" id="menuUsuario"></ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="container py-4 flex-grow-1">
+    <h1 class="mb-4">Meus pedidos</h1>
+
+    <div id="pedidosUsuario"></div>
+</main>
+
+<footer class="rodape text-center mt-auto">
+    <a href="https://www.facebook.com">Facebook</a>
+    <a href="https://www.instagram.com">Instagram</a>
+    <a href="https://www.tiktok.com">TikTok</a>
+    <p class="mb-0 mt-2">© 2026 - IFG STORE</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    const API_URL = "https://ppw-1-tads.vercel.app";
+
+    function ler(chave, padrao) {
+        const dados = localStorage.getItem(chave);
+
+        if (dados === null) {
+            return padrao;
+        }
+
+        try {
+            return JSON.parse(dados);
+        } catch (erro) {
+            return padrao;
+        }
+    }
+
+    function gravar(chave, valor) {
+        localStorage.setItem(chave, JSON.stringify(valor));
+    }
+
+    function moeda(valor) {
+        return Number(valor).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+    }
+
+    function textoSeguro(valor) {
+        let texto = String(valor);
+
+        texto = texto.replace(/&/g, "&amp;");
+        texto = texto.replace(/</g, "&lt;");
+        texto = texto.replace(/>/g, "&gt;");
+        texto = texto.replace(/"/g, "&quot;");
+        texto = texto.replace(/'/g, "&#39;");
+
+        return texto;
+    }
+
+    function sair() {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = "index.html";
+    }
+
+    function atualizarCabecalho() {
+        const usuario = ler("usuarioLogado", null);
+        const menu = document.getElementById("menuUsuario");
+
+        if (usuario !== null) {
+            menu.innerHTML =
+                '<li><a class="dropdown-item" href="dados_pessoais.html">Meus Dados</a></li>' +
+                '<li><a class="dropdown-item" href="meus_pedidos.html">Meus Pedidos</a></li>' +
+                '<li><button class="dropdown-item" onclick="sair()">Sair</button></li>';
+        } else {
+            menu.innerHTML =
+                '<li><a class="dropdown-item" href="login.html">Entrar</a></li>' +
+                '<li><a class="dropdown-item" href="novo_usuario.html">Cadastrar</a></li>';
+        }
+
+        const carrinho = ler("carrinho", []);
+        let quantidade = 0;
+
+        for (let i = 0; i < carrinho.length; i++) {
+            quantidade = quantidade + Number(carrinho[i].quantidade);
+        }
+
+        document.getElementById("contadorCarrinho").textContent = quantidade;
+
+        if (quantidade > 0) {
+            document.getElementById("iconeCarrinho").className =
+                "bi bi-cart-fill fs-4";
+        } else {
+            document.getElementById("iconeCarrinho").className =
+                "bi bi-cart fs-4";
+        }
+    }
+
+    // MOSTRAR OS PEDIDOS DO USUÁRIO LOGADO
+
+    function renderizarPedidos() {
+        const usuario = ler("usuarioLogado", null);
+        const pedidos = ler("pedidos", []);
+        const lista = document.getElementById("pedidosUsuario");
+
+        lista.innerHTML = "";
+
+        if (usuario === null) {
+            window.location.href = "login.html";
+            return;
+        }
+
+        let quantidadePedidos = 0;
+
+        for (let i = 0; i < pedidos.length; i++) {
+            const pedido = pedidos[i];
+
+            if (pedido.email === usuario.email) {
+                quantidadePedidos++;
+
+                const card = document.createElement("div");
+                card.className = "card mb-3 shadow-sm";
+
+                let desabilitado = "";
+
+                if (String(pedido.status).toLowerCase() === "cancelado") {
+                    desabilitado = "disabled";
+                }
+
+                card.innerHTML =
+                    '<div class="card-body">' +
+
+                        '<h2 class="h5">Pedido ' +
+                        textoSeguro(pedido.protocolo) + '</h2>' +
+
+                        '<p>Data: ' +
+                        textoSeguro(pedido.data) + '</p>' +
+
+                        '<p>Status: <strong>' +
+                        textoSeguro(pedido.status) + '</strong></p>' +
+
+                        '<p>Total: ' +
+                        moeda(pedido.valorFinal) + '</p>' +
+
+                        '<input type="hidden" class="protocolo-pedido" ' +
+                        'value="' + textoSeguro(pedido.protocolo) + '">' +
+
+                        '<a class="btn btn-outline-success btn-sm me-2" ' +
+                        'href="pedido.html?id=' +
+                        encodeURIComponent(pedido.protocolo) + '">' +
+                        'Visualizar Detalhes do Pedido</a>' +
+
+                        '<button class="btn btn-outline-danger btn-sm" ' +
+                        desabilitado + ' onclick="cancelarPedido(this)">' +
+                        'Cancelar Pedido</button>' +
+
+                        '<p class="mensagemPedido text-danger mt-2"></p>' +
+
+                    '</div>';
+
+                lista.appendChild(card);
+            }
+        }
+
+        if (quantidadePedidos === 0) {
+            lista.innerHTML =
+                '<div class="alert alert-info">' +
+                'Você ainda não possui pedidos.</div>';
+        }
+    }
+
+    // CANCELAR PEDIDO PELA API
+
+    async function cancelarPedido(botao) {
+        const card = botao.parentElement;
+
+        const protocolo =
+            card.querySelector(".protocolo-pedido").value;
+
+        const mensagem =
+            card.querySelector(".mensagemPedido");
+
+        if (protocolo === "") {
+            mensagem.textContent = "Protocolo não informado.";
+            return;
+        }
+
+        if (!confirm("Deseja cancelar o pedido " + protocolo + "?")) {
+            return;
+        }
+
+        botao.disabled = true;
+
+        try {
+            const resposta = await fetch(
+                API_URL + "/api/pedido?protocolo=" +
+                encodeURIComponent(protocolo),
+                {
+                    method: "DELETE"
+                }
+            );
+
+            const dados = await resposta.json();
+
+            if (resposta.status === 400) {
+                mensagem.textContent =
+                    "Protocolo não informado.";
+
+            } else if (resposta.status === 404) {
+                mensagem.textContent =
+                    "Pedido não encontrado.";
+
+            } else if (resposta.status === 422) {
+                mensagem.textContent =
+                    "Este pedido já foi enviado e não pode ser cancelado.";
+
+            } else if (resposta.status === 200) {
+                const pedidos = ler("pedidos", []);
+
+                for (let i = 0; i < pedidos.length; i++) {
+                    if (pedidos[i].protocolo === protocolo) {
+                        pedidos[i].status = "cancelado";
+                    }
+                }
+
+                gravar("pedidos", pedidos);
+
+                const ultimoPedido = ler("ultimoPedido", null);
+
+                if (ultimoPedido !== null) {
+                    if (ultimoPedido.protocolo === protocolo) {
+                        ultimoPedido.status = "cancelado";
+                        gravar("ultimoPedido", ultimoPedido);
+                    }
+                }
+
+                alert(dados.mensagem);
+                renderizarPedidos();
+
+            } else {
+                mensagem.textContent =
+                    "Erro HTTP " + resposta.status;
+            }
+
+        } catch (erro) {
+            mensagem.textContent =
+                "Erro de conexão com a API.";
+
+        } finally {
+            botao.disabled = false;
+
+            if (document.body.contains(botao)) {
+                const pedidos = ler("pedidos", []);
+
+                for (let i = 0; i < pedidos.length; i++) {
+                    if (pedidos[i].protocolo === protocolo &&
+                        pedidos[i].status === "cancelado") {
+                        botao.disabled = true;
+                    }
+                }
+            }
+        }
+    }
+
+    atualizarCabecalho();
+    renderizarPedidos();
+
+</script>
+
+</body>
+</html>

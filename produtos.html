@@ -3,171 +3,482 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IFG STORE - Produtos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Produtos | IFG STORE</title>
     <link rel="icon" href="favicon (1).ico">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
+
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="IFG.png" width="65" alt="Logo IFG"> IFG STORE
+                <img src="IFG.png" alt="IFG" width="55"> IFG STORE
             </a>
-            <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="menuPrincipal">
+
+            <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="produtos.html">Produtos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="produtos.html">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contato.html">Contato</a>
+                    </li>
                 </ul>
-                <a href="carrinho.html" class="nav-link text-white me-4">
+
+                <a href="carrinho.html" class="text-white text-decoration-none me-4">
                     <i id="iconeCarrinho" class="bi bi-cart fs-4"></i>
                     <span id="contadorCarrinho" class="badge bg-danger">0</span>
                 </a>
+
                 <div class="dropdown">
-                    <button class="btn btn-outline-light dropdown-toggle"
-                            data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle fs-4"></i>
+                    <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" id="menuUsuario"></ul>
                 </div>
             </div>
         </div>
     </nav>
+</header>
 
-    <main class="container my-5">
-        <h1 class="text-center mb-4">Nossos Produtos</h1>
+<main class="container py-4 flex-grow-1">
 
-        <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card produto shadow-sm h-100">
-                    <img src="dell.png" class="card-img-top" alt="Notebook Dell 8 GB">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Notebook DELL - 8 GB</h5>
-                        <p>Memória RAM: 8 GB<br>HD: 1 TB<br>Processador: Core i5</p>
-                        <h4 class="text-success mt-auto">R$ 3.099,99</h4>
-                        <button class="btn btn-success mt-3"
-                                onclick="adicionarCarrinho(1)">
-                            <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <h1 class="mb-4">Nossos produtos</h1>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card produto shadow-sm h-100">
-                    <img src="computador.jpg" class="card-img-top" alt="Notebook Dell 16 GB">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Notebook DELL - 16 GB</h5>
-                        <p>Memória RAM: 16 GB<br>SSD: 1 TB<br>Processador: Core i5</p>
-                        <h4 class="text-success mt-auto">R$ 4.099,99</h4>
-                        <button class="btn btn-success mt-3"
-                                onclick="adicionarCarrinho(2)">
-                            <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <div class="row g-3 mb-4">
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card produto shadow-sm h-100">
-                    <img src="comp.png" class="card-img-top" alt="Notebook Dell 32 GB">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Notebook DELL - 32 GB</h5>
-                        <p>Memória RAM: 32 GB<br>SSD: 1 TB<br>Processador: Core i5</p>
-                        <h4 class="text-success mt-auto">R$ 5.099,99</h4>
-                        <button class="btn btn-success mt-3"
-                                onclick="adicionarCarrinho(3)">
-                            <i class="bi bi-cart-plus"></i> Adicionar ao carrinho
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-7">
+            <label for="buscaProduto" class="form-label">
+                Buscar produtos
+            </label>
+
+            <input type="search" id="buscaProduto" class="form-control"
+                   placeholder="Pesquisar produtos">
         </div>
-    </main>
 
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="toastCarrinho" class="toast" role="alert">
-            <div class="toast-header">
-                <strong class="me-auto">IFG STORE</strong>
-                <button type="button" class="btn-close"
-                        data-bs-dismiss="toast"></button>
-            </div>
-            <div class="toast-body">Produto adicionado ao carrinho!</div>
+        <div class="col-md-5">
+            <label for="categoriaProduto" class="form-label">
+                Categoria
+            </label>
+
+            <select id="categoriaProduto" class="form-select">
+                <option value="">Todas as categorias</option>
+                <option value="Vestuário">Vestuário</option>
+                <option value="Eletrônicos">Eletrônicos</option>
+                <option value="Calçados">Calçados</option>
+                <option value="Eletrodomésticos">Eletrodomésticos</option>
+                <option value="Acessórios">Acessórios</option>
+                <option value="Móveis">Móveis</option>
+            </select>
         </div>
+
     </div>
 
-    <footer class="rodape bg-dark text-white text-center p-4 mt-auto">
-        <p>Redes sociais:
-            <a href="https://www.facebook.com/" class="text-white mx-2">Facebook</a>
-            <a href="https://www.instagram.com/" class="text-white mx-2">Instagram</a>
-            <a href="https://www.tiktok.com/" class="text-white mx-2">TikTok</a>
-        </p>
-        <p class="mb-0">&copy; 2026 IFG STORE</p>
-    </footer>
+    <div class="row g-4 produtos" id="listaProdutos"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function atualizarMenuUsuario() {
-            let menu = document.getElementById("menuUsuario");
-            let usuario = localStorage.getItem("usuarioLogado");
+</main>
 
-            if (usuario) {
-                menu.innerHTML =
-                    '<li><a class="dropdown-item" href="meus-dados.html">Meus Dados</a></li>' +
-                    '<li><a class="dropdown-item" href="meus-pedidos.html">Meus Pedidos</a></li>' +
-                    '<li><button class="dropdown-item" onclick="sair()">Sair</button></li>';
-            } else {
-                menu.innerHTML =
-                    '<li><a class="dropdown-item" href="novo_usuario.html">Cadastrar</a></li>' +
-                    '<li><a class="dropdown-item" href="login.html">Entrar</a></li>';
-            }
+<footer class="rodape text-center mt-auto">
+    <a href="https://www.facebook.com">Facebook</a>
+    <a href="https://www.instagram.com">Instagram</a>
+    <a href="https://www.tiktok.com">TikTok</a>
+    <p class="mb-0 mt-2">© 2026 - IFG STORE</p>
+</footer>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastCarrinho" class="toast text-bg-success">
+        <div class="d-flex">
+            <div class="toast-body">
+                Produto adicionado ao carrinho!
+            </div>
+
+            <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    const API_URL = "https://ppw-1-tads.vercel.app";
+
+    let produtosCarregados = [];
+    let temporizadorBusca;
+    let numeroBusca = 0;
+
+    function ler(chave, padrao) {
+        const dados = localStorage.getItem(chave);
+
+        if (dados === null) {
+            return padrao;
         }
 
-        function sair() {
-            localStorage.removeItem("usuarioLogado");
-            window.location.href = "index.html";
+        try {
+            return JSON.parse(dados);
+        } catch (erro) {
+            return padrao;
+        }
+    }
+
+    function gravar(chave, valor) {
+        localStorage.setItem(chave, JSON.stringify(valor));
+    }
+
+    function moeda(valor) {
+        return Number(valor).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+    }
+
+    // TRATAR TEXTOS QUE SERÃO COLOCADOS NO HTML
+
+    function textoSeguro(valor) {
+        let texto = String(valor);
+
+        texto = texto.replace(/&/g, "&amp;");
+        texto = texto.replace(/</g, "&lt;");
+        texto = texto.replace(/>/g, "&gt;");
+        texto = texto.replace(/"/g, "&quot;");
+        texto = texto.replace(/'/g, "&#39;");
+
+        return texto;
+    }
+
+    function sair() {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = "index.html";
+    }
+
+    function atualizarCabecalho() {
+        const usuario = ler("usuarioLogado", null);
+        const menu = document.getElementById("menuUsuario");
+
+        if (usuario !== null) {
+            menu.innerHTML =
+                '<li><a class="dropdown-item" href="dados_pessoais.html">Meus Dados</a></li>' +
+                '<li><a class="dropdown-item" href="meus_pedidos.html">Meus Pedidos</a></li>' +
+                '<li><button class="dropdown-item" onclick="sair()">Sair</button></li>';
+        } else {
+            menu.innerHTML =
+                '<li><a class="dropdown-item" href="login.html">Entrar</a></li>' +
+                '<li><a class="dropdown-item" href="novo_usuario.html">Cadastrar</a></li>';
         }
 
-        function atualizarCarrinho() {
-            let carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
-            let quantidade = carrinho.reduce(function(soma, item) {
-                return soma + item.quantidade;
-            }, 0);
-
-            document.getElementById("contadorCarrinho").textContent = quantidade;
-            document.getElementById("iconeCarrinho").className =
-                quantidade > 0 ? "bi bi-cart-fill fs-4" : "bi bi-cart fs-4";
-        }
-
-        function adicionarCarrinho(id) {
-            let carrinho = JSON.parse(localStorage.getItem("carrinho") || "[]");
-
-            let existente = carrinho.find(function(item) {
-                return item.id === id;
-            });
-
-            if (existente) {
-                existente.quantidade++;
-            } else {
-                carrinho.push({ id: id, quantidade: 1 });
-            }
-
-            localStorage.setItem("carrinho", JSON.stringify(carrinho));
-            atualizarCarrinho();
-
-            let toast = new bootstrap.Toast(document.getElementById("toastCarrinho"));
-            toast.show();
-        }
-
-        atualizarMenuUsuario();
         atualizarCarrinho();
-    </script>
+    }
+
+    function atualizarCarrinho() {
+        const carrinho = ler("carrinho", []);
+        let quantidade = 0;
+
+        for (let i = 0; i < carrinho.length; i++) {
+            quantidade = quantidade + Number(carrinho[i].quantidade);
+        }
+
+        document.getElementById("contadorCarrinho").textContent = quantidade;
+
+        if (quantidade > 0) {
+            document.getElementById("iconeCarrinho").className =
+                "bi bi-cart-fill fs-4";
+        } else {
+            document.getElementById("iconeCarrinho").className =
+                "bi bi-cart fs-4";
+        }
+    }
+
+    // TRANSFORMAR OS DADOS RECEBIDOS DA API
+
+    function organizarProduto(produto) {
+        const novoProduto = {};
+
+        novoProduto.id = Number(produto.id);
+
+        if (produto.name !== undefined) {
+            novoProduto.name = produto.name;
+        } else {
+            novoProduto.name = produto.nome;
+        }
+
+        if (produto.category !== undefined) {
+            novoProduto.category = produto.category;
+        } else {
+            novoProduto.category = produto.categoria;
+        }
+
+        if (produto.description !== undefined) {
+            novoProduto.description = produto.description;
+        } else {
+            novoProduto.description = produto.descricao;
+        }
+
+        if (produto.price !== undefined) {
+            novoProduto.price = Number(produto.price);
+        } else {
+            novoProduto.price = Number(
+                String(produto.preço).replace(",", ".")
+            );
+        }
+
+        if (produto.stock !== undefined) {
+            novoProduto.stock = Number(produto.stock);
+        } else {
+            novoProduto.stock = Number(produto.estoque);
+        }
+
+        if (produto.image !== undefined) {
+            novoProduto.image = produto.image;
+        } else {
+            novoProduto.image = produto.imagem;
+        }
+
+        return novoProduto;
+    }
+
+    // CARREGAR OS PRODUTOS DO SERVIDOR
+
+    async function carregarProdutos() {
+        const lista = document.getElementById("listaProdutos");
+
+        const busca = document.getElementById("buscaProduto").value.trim();
+        const categoria = document.getElementById("categoriaProduto").value;
+
+        numeroBusca++;
+        const buscaAtual = numeroBusca;
+
+        let endereco = API_URL + "/api/products";
+        let parametros = [];
+
+        if (busca !== "") {
+            parametros.push("search=" + encodeURIComponent(busca));
+        }
+
+        if (categoria !== "") {
+            parametros.push("category=" + encodeURIComponent(categoria));
+        }
+
+        if (parametros.length > 0) {
+            endereco = endereco + "?" + parametros.join("&");
+        }
+
+        lista.innerHTML = '<div class="col-12">Carregando produtos...</div>';
+
+        try {
+            const resposta = await fetch(endereco);
+
+            // Impede que uma busca antiga substitua a mais recente.
+
+            if (buscaAtual !== numeroBusca) {
+                return;
+            }
+
+            if (!resposta.ok) {
+                lista.innerHTML =
+                    '<div class="col-12 alert alert-danger">' +
+                    'Erro HTTP ' + resposta.status +
+                    ' ao carregar os produtos.</div>';
+
+                return;
+            }
+
+            const dados = await resposta.json();
+
+            let produtos = [];
+
+            if (dados.products !== undefined) {
+                produtos = dados.products;
+            } else if (dados.produtos !== undefined) {
+                produtos = dados.produtos;
+            }
+
+            produtosCarregados = [];
+
+            for (let i = 0; i < produtos.length; i++) {
+                const produto = organizarProduto(produtos[i]);
+                produtosCarregados.push(produto);
+            }
+
+            lista.innerHTML = "";
+
+            if (produtosCarregados.length === 0) {
+                lista.innerHTML =
+                    '<div class="col-12 alert alert-info">' +
+                    'Nenhum produto encontrado.</div>';
+
+                return;
+            }
+
+            // CRIAR OS CARDS COM O BOOTSTRAP
+
+            for (let i = 0; i < produtosCarregados.length; i++) {
+                const produto = produtosCarregados[i];
+
+                const coluna = document.createElement("div");
+                coluna.className = "col-md-6 col-lg-4";
+
+                let mensagemEstoque = "";
+                let botao = "";
+
+                if (produto.stock === 0) {
+                    mensagemEstoque =
+                        '<p class="text-danger fw-bold">Produto esgotado</p>';
+
+                    botao =
+                        '<button class="btn btn-secondary mt-auto" disabled>' +
+                        'Indisponível</button>';
+                } else {
+                    mensagemEstoque =
+                        '<p class="text-muted">Estoque: ' +
+                        produto.stock + '</p>';
+
+                    botao =
+                        '<button class="btn btn-success mt-auto" ' +
+                        'onclick="adicionarAoCarrinho(' + produto.id + ')">' +
+                        '<i class="bi bi-cart-plus"></i> ' +
+                        'Adicionar ao carrinho</button>';
+                }
+
+                coluna.innerHTML =
+                    '<div class="card produto h-100 shadow-sm">' +
+                        '<img src="' + textoSeguro(produto.image) + '" ' +
+                        'class="card-img-top" alt="' +
+                        textoSeguro(produto.name) + '">' +
+
+                        '<div class="card-body d-flex flex-column">' +
+                            '<h2 class="h5">' +
+                            textoSeguro(produto.name) + '</h2>' +
+
+                            '<p><strong>Categoria:</strong> ' +
+                            textoSeguro(produto.category) + '</p>' +
+
+                            '<p><strong>Descrição:</strong> ' +
+                            textoSeguro(produto.description) + '</p>' +
+
+                            '<p class="fs-4 fw-bold text-success">' +
+                            moeda(produto.price) + '</p>' +
+
+                            mensagemEstoque +
+
+                            '<input type="hidden" class="id-produto" ' +
+                            'value="' + produto.id + '">' +
+
+                            botao +
+                        '</div>' +
+                    '</div>';
+
+                lista.appendChild(coluna);
+            }
+
+        } catch (erro) {
+            if (buscaAtual === numeroBusca) {
+                lista.innerHTML =
+                    '<div class="col-12 alert alert-danger">' +
+                    'Não foi possível conectar à API.</div>';
+            }
+        }
+    }
+
+    // ADICIONAR UM PRODUTO AO CARRINHO
+
+    function adicionarAoCarrinho(id) {
+        let produtoSelecionado = null;
+
+        for (let i = 0; i < produtosCarregados.length; i++) {
+            if (produtosCarregados[i].id === id) {
+                produtoSelecionado = produtosCarregados[i];
+                break;
+            }
+        }
+
+        if (produtoSelecionado === null) {
+            alert("Produto não encontrado.");
+            return;
+        }
+
+        if (produtoSelecionado.stock <= 0) {
+            alert("Produto esgotado.");
+            return;
+        }
+
+        const carrinho = ler("carrinho", []);
+        let encontrado = false;
+
+        for (let i = 0; i < carrinho.length; i++) {
+            if (Number(carrinho[i].id) === id) {
+                if (carrinho[i].quantidade >= produtoSelecionado.stock) {
+                    alert("Estoque insuficiente.");
+                    return;
+                }
+
+                carrinho[i].quantidade = carrinho[i].quantidade + 1;
+                carrinho[i].preco = produtoSelecionado.price;
+                carrinho[i].stock = produtoSelecionado.stock;
+
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (encontrado === false) {
+            const item = {
+                id: produtoSelecionado.id,
+                nome: produtoSelecionado.name,
+                preco: produtoSelecionado.price,
+                imagem: produtoSelecionado.image,
+                quantidade: 1,
+                stock: produtoSelecionado.stock
+            };
+
+            carrinho.push(item);
+        }
+
+        gravar("carrinho", carrinho);
+        atualizarCarrinho();
+
+        const toast = document.getElementById("toastCarrinho");
+        bootstrap.Toast.getOrCreateInstance(toast).show();
+    }
+
+    // BUSCA COM DEBOUNCE
+
+    document.getElementById("buscaProduto").addEventListener(
+        "input",
+        function() {
+            clearTimeout(temporizadorBusca);
+
+            temporizadorBusca = setTimeout(function() {
+                carregarProdutos();
+            }, 450);
+        }
+    );
+
+    document.getElementById("categoriaProduto").addEventListener(
+        "change",
+        function() {
+            clearTimeout(temporizadorBusca);
+            carregarProdutos();
+        }
+    );
+
+    atualizarCabecalho();
+    carregarProdutos();
+
+</script>
+
 </body>
 </html>

@@ -3,269 +3,981 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IFG STORE - Carrinho</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carrinho | IFG STORE</title>
     <link rel="icon" href="favicon (1).ico">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
+
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="IFG.png" width="65" alt="Logo IFG"> IFG STORE
+                <img src="IFG.png" alt="IFG" width="55"> IFG STORE
             </a>
-            <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
+
+            <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="menuPrincipal">
+
+            <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
                     <li class="nav-item"><a class="nav-link" href="produtos.html">Produtos</a></li>
                     <li class="nav-item"><a class="nav-link" href="contato.html">Contato</a></li>
                 </ul>
-                <a href="carrinho.html" class="nav-link text-white me-4">
+
+                <a href="carrinho.html" class="text-white text-decoration-none me-4">
                     <i id="iconeCarrinho" class="bi bi-cart fs-4"></i>
                     <span id="contadorCarrinho" class="badge bg-danger">0</span>
                 </a>
+
                 <div class="dropdown">
-                    <button class="btn btn-outline-light dropdown-toggle"
-                            data-bs-toggle="dropdown">
-                        <i class="bi bi-person-circle fs-4"></i>
+                    <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i>
                     </button>
+
                     <ul class="dropdown-menu dropdown-menu-end" id="menuUsuario"></ul>
                 </div>
             </div>
         </div>
     </nav>
+</header>
 
-    <main class="container my-5">
-        <h1 class="mb-4">Meu Carrinho</h1>
+<main class="container py-4 flex-grow-1">
 
-        <div class="row g-4">
-            <div class="col-lg-8" id="listaCarrinho"></div>
+    <h1 class="mb-4">Meu carrinho</h1>
 
-            <div class="col-lg-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h4>Resumo do pedido</h4>
-                        <hr>
-                        <h5>Total: <span id="totalCarrinho">R$ 0,00</span></h5>
-                        <button class="btn btn-success w-100 mt-3"
-                                onclick="finalizarPedido()">
-                            Finalizar pedido
-                        </button>
-                        <a href="produtos.html" class="btn btn-outline-secondary w-100 mt-2">
-                            Continuar comprando
-                        </a>
+    <div class="row g-4 carrinho">
+
+        <div class="col-lg-8">
+            <div id="listaCarrinho"></div>
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h2 class="h4">Resumo do pedido</h2>
+
+                    <p>
+                        Total de itens:
+                        <strong id="totalItens">0</strong>
+                    </p>
+
+                    <p>
+                        Subtotal:
+                        <strong id="subtotalCarrinho">R$ 0,00</strong>
+                    </p>
+
+                    <hr>
+
+                    <label for="cepEntrega" class="form-label">
+                        CEP de entrega
+                    </label>
+
+                    <input type="text" id="cepEntrega"
+                           class="form-control mb-2"
+                           placeholder="99999-999" maxlength="9">
+
+                    <button class="btn btn-outline-success w-100"
+                            onclick="calcularFrete()">
+                        Calcular Frete
+                    </button>
+
+                    <div id="opcoesFrete" class="mt-3"></div>
+                    <p id="mensagemFrete" class="small mt-2"></p>
+
+                    <hr>
+
+                    <label for="codigoCupom" class="form-label">
+                        Cupom de desconto
+                    </label>
+
+                    <input type="text" id="codigoCupom"
+                           class="form-control mb-2"
+                           placeholder="Ex.: TADS10">
+
+                    <button class="btn btn-outline-success w-100"
+                            onclick="aplicarCupom()">
+                        Aplicar Cupom
+                    </button>
+
+                    <p id="mensagemCupom" class="small mt-2"></p>
+
+                    <hr>
+
+                    <p>
+                        Frete:
+                        <strong id="valorFrete">R$ 0,00</strong>
+                    </p>
+
+                    <p>
+                        Desconto:
+                        <strong id="valorDesconto">R$ 0,00</strong>
+                    </p>
+
+                    <p class="fs-5">
+                        Valor total:
+                        <strong id="valorTotal">R$ 0,00</strong>
+                    </p>
+
+                    <hr>
+
+                    <label for="metodoPagamento" class="form-label">
+                        Forma de pagamento
+                    </label>
+
+                    <select id="metodoPagamento" class="form-select mb-3">
+                        <option value="">Selecione</option>
+                        <option value="pix">Pix</option>
+                        <option value="boleto">Boleto</option>
+                        <option value="cartao">Cartão</option>
+                    </select>
+
+                    <div id="campoCartao" hidden>
+                        <label for="numeroCartao" class="form-label">
+                            Número do cartão
+                        </label>
+
+                        <input type="text" id="numeroCartao"
+                               class="form-control mb-3"
+                               placeholder="Número do cartão">
                     </div>
+
+                    <button id="finalizarCompra"
+                            class="btn btn-success w-100"
+                            onclick="finalizarPedido()">
+                        Finalizar compra
+                    </button>
+
+                    <p id="mensagemCheckout"
+                       class="small mt-2" role="alert"></p>
+
                 </div>
             </div>
+
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer class="rodape bg-dark text-white text-center p-4 mt-auto">
-        <p>Redes sociais:
-            <a href="https://www.facebook.com/" class="text-white mx-2">Facebook</a>
-            <a href="https://www.instagram.com/" class="text-white mx-2">Instagram</a>
-            <a href="https://www.tiktok.com/" class="text-white mx-2">TikTok</a>
-        </p>
-        <p class="mb-0">&copy; 2026 IFG STORE</p>
-    </footer>
+<footer class="rodape text-center mt-auto">
+    <a href="https://www.facebook.com">Facebook</a>
+    <a href="https://www.instagram.com">Instagram</a>
+    <a href="https://www.tiktok.com">TikTok</a>
+    <p class="mb-0 mt-2">© 2026 - IFG STORE</p>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        let produtos = [
-            { id: 1, nome: "Notebook DELL - 8 GB", preco: 3099.99, imagem: "dell.png" },
-            { id: 2, nome: "Notebook DELL - 16 GB", preco: 4099.99, imagem: "computador.jpg" },
-            { id: 3, nome: "Notebook DELL - 32 GB", preco: 5099.99, imagem: "comp.png" }
-        ];
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        function atualizarMenuUsuario() {
-            let menu = document.getElementById("menuUsuario");
-            let usuario = localStorage.getItem("usuarioLogado");
+<script>
 
-            if (usuario) {
-                menu.innerHTML =
-                    '<li><a class="dropdown-item" href="meus-dados.html">Meus Dados</a></li>' +
-                    '<li><a class="dropdown-item" href="meus-pedidos.html">Meus Pedidos</a></li>' +
-                    '<li><button class="dropdown-item" onclick="sair()">Sair</button></li>';
-            } else {
-                menu.innerHTML =
-                    '<li><a class="dropdown-item" href="novo_usuario.html">Cadastrar</a></li>' +
-                    '<li><a class="dropdown-item" href="login.html">Entrar</a></li>';
-            }
+    const API_URL = "https://ppw-1-tads.vercel.app";
+
+    let opcoesFrete = [];
+    let freteSelecionado = null;
+    let cupomAplicado = null;
+
+    // LOCALSTORAGE
+
+    function ler(chave, padrao) {
+        const dados = localStorage.getItem(chave);
+
+        if (dados === null) {
+            return padrao;
         }
 
-        function sair() {
-            localStorage.removeItem("usuarioLogado");
-            window.location.href = "index.html";
+        try {
+            return JSON.parse(dados);
+        } catch (erro) {
+            return padrao;
+        }
+    }
+
+    function gravar(chave, valor) {
+        localStorage.setItem(chave, JSON.stringify(valor));
+    }
+
+    function moeda(valor) {
+        return Number(valor).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+    }
+
+    function textoSeguro(valor) {
+        let texto = String(valor);
+
+        texto = texto.replace(/&/g, "&amp;");
+        texto = texto.replace(/</g, "&lt;");
+        texto = texto.replace(/>/g, "&gt;");
+        texto = texto.replace(/"/g, "&quot;");
+        texto = texto.replace(/'/g, "&#39;");
+
+        return texto;
+    }
+
+    function mostrarMensagem(id, texto, tipo) {
+        const elemento = document.getElementById(id);
+
+        elemento.className = "small mt-2 text-" + tipo;
+        elemento.textContent = texto;
+    }
+
+    // CABEÇALHO
+
+    function sair() {
+        localStorage.removeItem("usuarioLogado");
+        window.location.href = "index.html";
+    }
+
+    function atualizarCabecalho() {
+        const usuario = ler("usuarioLogado", null);
+        const menu = document.getElementById("menuUsuario");
+
+        if (usuario !== null) {
+            menu.innerHTML =
+                '<li><a class="dropdown-item" href="dados_pessoais.html">Meus Dados</a></li>' +
+                '<li><a class="dropdown-item" href="meus_pedidos.html">Meus Pedidos</a></li>' +
+                '<li><button class="dropdown-item" onclick="sair()">Sair</button></li>';
+        } else {
+            menu.innerHTML =
+                '<li><a class="dropdown-item" href="login.html">Entrar</a></li>' +
+                '<li><a class="dropdown-item" href="novo_usuario.html">Cadastrar</a></li>';
         }
 
-        function obterCarrinho() {
-            return JSON.parse(localStorage.getItem("carrinho") || "[]");
+        const carrinho = ler("carrinho", []);
+        let quantidade = 0;
+
+        for (let i = 0; i < carrinho.length; i++) {
+            quantidade = quantidade + Number(carrinho[i].quantidade);
         }
 
-        function atualizarCarrinho() {
-            let carrinho = obterCarrinho();
-            let quantidade = carrinho.reduce(function(soma, item) {
-                return soma + item.quantidade;
-            }, 0);
+        document.getElementById("contadorCarrinho").textContent = quantidade;
 
-            document.getElementById("contadorCarrinho").textContent = quantidade;
+        if (quantidade > 0) {
             document.getElementById("iconeCarrinho").className =
-                quantidade > 0 ? "bi bi-cart-fill fs-4" : "bi bi-cart fs-4";
+                "bi bi-cart-fill fs-4";
+        } else {
+            document.getElementById("iconeCarrinho").className =
+                "bi bi-cart fs-4";
+        }
+    }
+
+    // CALCULAR O SUBTOTAL DOS PRODUTOS
+
+    function subtotalCarrinho() {
+        const carrinho = ler("carrinho", []);
+        let subtotal = 0;
+
+        for (let i = 0; i < carrinho.length; i++) {
+            const produto = carrinho[i];
+
+            subtotal = subtotal +
+                Number(produto.preco) * Number(produto.quantidade);
         }
 
-        function formatarPreco(valor) {
-            return valor.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL"
-            });
+        return subtotal;
+    }
+
+    // CALCULAR SUBTOTAL, FRETE, DESCONTO E TOTAL
+
+    function calcularResumo() {
+        const subtotal = subtotalCarrinho();
+
+        let frete = 0;
+        let descontoProdutos = 0;
+        let descontoFrete = 0;
+
+        if (freteSelecionado !== null) {
+            frete = Number(freteSelecionado.valor);
         }
 
-        function mostrarCarrinho() {
-            let carrinho = obterCarrinho();
-            let lista = document.getElementById("listaCarrinho");
-            let total = 0;
+        if (cupomAplicado !== null) {
+            if (cupomAplicado.tipo === "percentual") {
+                descontoProdutos =
+                    subtotal * cupomAplicado.desconto / 100;
 
-            lista.innerHTML = "";
+            } else if (cupomAplicado.tipo === "fixo") {
+                descontoProdutos = cupomAplicado.desconto;
 
-            if (carrinho.length === 0) {
-                lista.innerHTML =
-                    '<div class="alert alert-info">' +
-                        'Seu carrinho está vazio.' +
-                    '</div>';
+            } else if (cupomAplicado.tipo === "frete_gratis") {
+                descontoFrete =
+                    frete * cupomAplicado.desconto / 100;
             }
+        }
 
-            carrinho.forEach(function(item) {
-                let produto = produtos.find(function(p) {
-                    return p.id === item.id;
-                });
+        if (descontoProdutos > subtotal) {
+            descontoProdutos = subtotal;
+        }
 
-                if (!produto) {
+        if (descontoFrete > frete) {
+            descontoFrete = frete;
+        }
+
+        const descontoTotal = descontoProdutos + descontoFrete;
+        const total = subtotal + frete - descontoTotal;
+
+        document.getElementById("subtotalCarrinho").textContent =
+            moeda(subtotal);
+
+        if (freteSelecionado !== null) {
+            document.getElementById("valorFrete").textContent =
+                moeda(frete);
+        } else {
+            document.getElementById("valorFrete").textContent =
+                "Selecione o frete";
+        }
+
+        document.getElementById("valorDesconto").textContent =
+            "- " + moeda(descontoTotal);
+
+        document.getElementById("valorTotal").textContent =
+            moeda(total);
+
+        gravar("valorFinalCarrinho", total);
+
+        return {
+            subtotal: subtotal,
+            frete: frete,
+            desconto: descontoTotal,
+            total: total
+        };
+    }
+
+    // MOSTRAR OS PRODUTOS DO CARRINHO
+
+    function renderizarCarrinho() {
+        const lista = document.getElementById("listaCarrinho");
+        const carrinho = ler("carrinho", []);
+
+        lista.innerHTML = "";
+
+        if (carrinho.length === 0) {
+            lista.innerHTML =
+                '<div class="alert alert-info">' +
+                'Seu carrinho está vazio. ' +
+                '<a href="produtos.html">Ver produtos</a>' +
+                '</div>';
+        }
+
+        let quantidadeTotal = 0;
+
+        for (let i = 0; i < carrinho.length; i++) {
+            const produto = carrinho[i];
+
+            quantidadeTotal = quantidadeTotal +
+                Number(produto.quantidade);
+
+            const item = document.createElement("div");
+            item.className = "card mb-3 shadow-sm";
+
+            item.innerHTML =
+                '<div class="card-body d-flex flex-wrap align-items-center gap-3">' +
+
+                    '<img class="foto-carrinho" src="' +
+                    textoSeguro(produto.imagem) + '" alt="' +
+                    textoSeguro(produto.nome) + '">' +
+
+                    '<div class="flex-grow-1">' +
+
+                        '<h2 class="h5">' +
+                        textoSeguro(produto.nome) + '</h2>' +
+
+                        '<p>' + moeda(produto.preco) + ' cada</p>' +
+
+                        '<p>Subtotal: <strong>' +
+                        moeda(produto.preco * produto.quantidade) +
+                        '</strong></p>' +
+
+                        '<button class="btn btn-outline-secondary btn-sm" ' +
+                        'onclick="alterarQuantidade(' + Number(produto.id) + ', -1)">' +
+                        '−</button>' +
+
+                        ' <span class="mx-2">' +
+                        Number(produto.quantidade) + '</span> ' +
+
+                        '<button class="btn btn-outline-secondary btn-sm" ' +
+                        'onclick="alterarQuantidade(' + Number(produto.id) + ', 1)">' +
+                        '+</button>' +
+
+                        ' <button class="btn btn-outline-danger btn-sm ms-2" ' +
+                        'onclick="removerProduto(' + Number(produto.id) + ')">' +
+                        'Remover</button>' +
+
+                    '</div>' +
+                '</div>';
+
+            lista.appendChild(item);
+        }
+
+        document.getElementById("totalItens").textContent =
+            quantidadeTotal;
+
+        if (quantidadeTotal === 0) {
+            document.getElementById("finalizarCompra").disabled = true;
+        } else {
+            document.getElementById("finalizarCompra").disabled = false;
+        }
+
+        atualizarCabecalho();
+        calcularResumo();
+    }
+
+    // ALTERAR A QUANTIDADE DE UM PRODUTO
+
+    function alterarQuantidade(id, diferenca) {
+        const carrinho = ler("carrinho", []);
+
+        for (let i = 0; i < carrinho.length; i++) {
+            if (Number(carrinho[i].id) === id) {
+
+                const novaQuantidade =
+                    Number(carrinho[i].quantidade) + diferenca;
+
+                if (novaQuantidade > Number(carrinho[i].stock)) {
+                    alert("Quantidade indisponível em estoque.");
                     return;
                 }
 
-                let subtotal = produto.preco * item.quantidade;
-                total += subtotal;
-
-                lista.innerHTML +=
-                    '<div class="card shadow-sm mb-3">' +
-                        '<div class="card-body">' +
-                            '<div class="row align-items-center g-3">' +
-                                '<div class="col-md-3">' +
-                                    '<img src="' + produto.imagem + '" class="img-fluid" alt="Notebook">' +
-                                '</div>' +
-                                '<div class="col-md-9">' +
-                                    '<h5>' + produto.nome + '</h5>' +
-                                    '<p>Preço unitário: ' + formatarPreco(produto.preco) + '</p>' +
-                                    '<p>Quantidade: ' +
-                                        '<button class="btn btn-outline-secondary btn-sm" onclick="alterarQuantidade(' + produto.id + ', -1)">-</button> ' +
-                                        item.quantidade + ' ' +
-                                        '<button class="btn btn-outline-secondary btn-sm" onclick="alterarQuantidade(' + produto.id + ', 1)">+</button>' +
-                                    '</p>' +
-                                    '<p><strong>Subtotal: ' + formatarPreco(subtotal) + '</strong></p>' +
-                                    '<button class="btn btn-danger btn-sm" onclick="removerProduto(' + produto.id + ')">' +
-                                        '<i class="bi bi-trash"></i> Remover' +
-                                    '</button>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
-            });
-
-            document.getElementById("totalCarrinho").textContent = formatarPreco(total);
-            atualizarCarrinho();
-        }
-
-        function alterarQuantidade(id, alteracao) {
-            let carrinho = obterCarrinho();
-
-            let item = carrinho.find(function(p) {
-                return p.id === id;
-            });
-
-            if (item) {
-                item.quantidade += alteracao;
-
-                if (item.quantidade <= 0) {
-                    carrinho = carrinho.filter(function(p) {
-                        return p.id !== id;
-                    });
+                if (novaQuantidade <= 0) {
+                    carrinho.splice(i, 1);
+                } else {
+                    carrinho[i].quantidade = novaQuantidade;
                 }
-            }
 
-            localStorage.setItem("carrinho", JSON.stringify(carrinho));
-            mostrarCarrinho();
+                break;
+            }
         }
 
-        function removerProduto(id) {
-            let carrinho = obterCarrinho();
+        gravar("carrinho", carrinho);
 
-            carrinho = carrinho.filter(function(item) {
-                return item.id !== id;
+        cupomAplicado = null;
+
+        mostrarMensagem(
+            "mensagemCupom",
+            "O carrinho mudou. Aplique novamente o cupom.",
+            "muted"
+        );
+
+        renderizarCarrinho();
+    }
+
+    // REMOVER UM PRODUTO
+
+    function removerProduto(id) {
+        const carrinho = ler("carrinho", []);
+
+        for (let i = 0; i < carrinho.length; i++) {
+            if (Number(carrinho[i].id) === id) {
+                carrinho.splice(i, 1);
+                break;
+            }
+        }
+
+        gravar("carrinho", carrinho);
+
+        cupomAplicado = null;
+        renderizarCarrinho();
+    }
+
+    // FORMATAR O CEP
+
+    function formatarCep(cep) {
+        const numeros = cep.replace(/\D/g, "");
+
+        if (numeros.length === 8) {
+            return numeros.substring(0, 5) + "-" +
+                   numeros.substring(5);
+        }
+
+        return cep.trim();
+    }
+
+    // CALCULAR O FRETE PELA API
+
+    async function calcularFrete() {
+        const campoCep = document.getElementById("cepEntrega");
+        const cep = formatarCep(campoCep.value);
+
+        campoCep.value = cep;
+
+        freteSelecionado = null;
+        opcoesFrete = [];
+
+        document.getElementById("opcoesFrete").innerHTML = "";
+
+        calcularResumo();
+
+        mostrarMensagem(
+            "mensagemFrete",
+            "Calculando frete...",
+            "muted"
+        );
+
+        try {
+            const resposta = await fetch(API_URL + "/api/frete", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    cep: cep
+                })
             });
 
-            localStorage.setItem("carrinho", JSON.stringify(carrinho));
-            mostrarCarrinho();
-        }
+            const dados = await resposta.json();
 
-        function finalizarPedido() {
-            let carrinho = obterCarrinho();
-
-            if (carrinho.length === 0) {
-                alert("Seu carrinho está vazio!");
+            if (resposta.status === 400) {
+                mostrarMensagem(
+                    "mensagemFrete",
+                    "CEP inválido. Use 99999-999.",
+                    "danger"
+                );
                 return;
             }
 
-            let usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
-
-            if (!usuario) {
-                alert("Faça login para finalizar o pedido!");
-                window.location.href = "login.html";
+            if (resposta.status === 404) {
+                mostrarMensagem(
+                    "mensagemFrete",
+                    "CEP não encontrado.",
+                    "danger"
+                );
                 return;
             }
 
-            let total = 0;
-            let itensPedido = [];
+            if (resposta.status === 422) {
+                mostrarMensagem(
+                    "mensagemFrete",
+                    "Região não atendida.",
+                    "danger"
+                );
+                return;
+            }
 
-            carrinho.forEach(function(item) {
-                let produto = produtos.find(function(p) {
-                    return p.id === item.id;
-                });
+            if (resposta.status !== 200) {
+                mostrarMensagem(
+                    "mensagemFrete",
+                    "Erro HTTP " + resposta.status,
+                    "danger"
+                );
+                return;
+            }
 
-                if (produto) {
-                    total += produto.preco * item.quantidade;
+            opcoesFrete = dados.fretes;
 
-                    itensPedido.push({
-                        id: produto.id,
-                        nome: produto.nome,
-                        preco: produto.preco,
-                        quantidade: item.quantidade
-                    });
-                }
+            const lista = document.getElementById("opcoesFrete");
+
+            for (let i = 0; i < opcoesFrete.length; i++) {
+                const frete = opcoesFrete[i];
+
+                const div = document.createElement("div");
+                div.className = "form-check";
+
+                div.innerHTML =
+                    '<input type="radio" class="form-check-input" ' +
+                    'name="frete" id="frete' + i + '" ' +
+                    'onclick="selecionarFrete(' + i + ')">' +
+
+                    '<label class="form-check-label" for="frete' + i + '">' +
+                    textoSeguro(frete.servico) + " - " +
+                    moeda(frete.valor) + " - " +
+                    textoSeguro(frete.prazo) +
+                    '</label>';
+
+                lista.appendChild(div);
+            }
+
+            mostrarMensagem(
+                "mensagemFrete",
+                "Selecione uma opção de frete.",
+                "success"
+            );
+
+        } catch (erro) {
+            mostrarMensagem(
+                "mensagemFrete",
+                "Erro ao conectar com a API.",
+                "danger"
+            );
+        }
+    }
+
+    // SELECIONAR UMA OPÇÃO DE FRETE
+
+    function selecionarFrete(indice) {
+        freteSelecionado = opcoesFrete[indice];
+        calcularResumo();
+    }
+
+    // APLICAR CUPOM PELA API
+
+    async function aplicarCupom() {
+        const campo = document.getElementById("codigoCupom");
+
+        const codigo = campo.value.trim().toUpperCase();
+        const subtotal = subtotalCarrinho();
+
+        cupomAplicado = null;
+        calcularResumo();
+
+        if (subtotal <= 0) {
+            mostrarMensagem(
+                "mensagemCupom",
+                "Adicione produtos ao carrinho.",
+                "danger"
+            );
+            return;
+        }
+
+        mostrarMensagem(
+            "mensagemCupom",
+            "Verificando cupom...",
+            "muted"
+        );
+
+        try {
+            const resposta = await fetch(API_URL + "/api/cupom", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    codigo: codigo,
+                    subtotal: subtotal
+                })
             });
 
-            let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
+            const dados = await resposta.json();
 
-            pedidos.push({
-                usuarioEmail: usuario.email,
-                data: new Date().toLocaleString("pt-BR"),
-                itens: itensPedido,
-                total: total
+            if (resposta.status === 400) {
+                mostrarMensagem(
+                    "mensagemCupom",
+                    "O código do cupom é obrigatório.",
+                    "danger"
+                );
+                return;
+            }
+
+            if (resposta.status === 404) {
+                mostrarMensagem(
+                    "mensagemCupom",
+                    "Cupom inexistente.",
+                    "danger"
+                );
+                return;
+            }
+
+            if (resposta.status === 410) {
+                mostrarMensagem(
+                    "mensagemCupom",
+                    "Este cupom já expirou.",
+                    "danger"
+                );
+                return;
+            }
+
+            if (resposta.status === 422) {
+                mostrarMensagem(
+                    "mensagemCupom",
+                    "O cupom exige compra mínima de R$ 500,00.",
+                    "danger"
+                );
+                return;
+            }
+
+            if (resposta.status !== 200) {
+                mostrarMensagem(
+                    "mensagemCupom",
+                    "Erro HTTP " + resposta.status,
+                    "danger"
+                );
+                return;
+            }
+
+            if (subtotal !== subtotalCarrinho()) {
+                mostrarMensagem(
+                    "mensagemCupom",
+                    "O carrinho mudou. Aplique o cupom novamente.",
+                    "warning"
+                );
+                return;
+            }
+
+            cupomAplicado = {
+                codigo: dados.cupom.codigo,
+                tipo: dados.cupom.tipo,
+                desconto: Number(dados.cupom.desconto)
+            };
+
+            calcularResumo();
+
+            mostrarMensagem(
+                "mensagemCupom",
+                dados.mensagem,
+                "success"
+            );
+
+        } catch (erro) {
+            mostrarMensagem(
+                "mensagemCupom",
+                "Erro ao conectar com a API.",
+                "danger"
+            );
+        }
+    }
+
+    // EXIBIR O CAMPO DE CARTÃO QUANDO NECESSÁRIO
+
+    document.getElementById("metodoPagamento").addEventListener(
+        "change",
+        function() {
+            const metodo = this.value;
+
+            if (metodo === "cartao") {
+                document.getElementById("campoCartao").hidden = false;
+            } else {
+                document.getElementById("campoCartao").hidden = true;
+            }
+        }
+    );
+
+    // LIMPAR O FRETE SE O CEP FOR ALTERADO
+
+    document.getElementById("cepEntrega").addEventListener(
+        "input",
+        function() {
+            freteSelecionado = null;
+            opcoesFrete = [];
+
+            document.getElementById("opcoesFrete").innerHTML = "";
+            calcularResumo();
+        }
+    );
+
+    // REMOVER CUPOM ANTERIOR SE O CÓDIGO MUDAR
+
+    document.getElementById("codigoCupom").addEventListener(
+        "input",
+        function() {
+            cupomAplicado = null;
+            calcularResumo();
+        }
+    );
+
+    // FINALIZAR A COMPRA
+
+    async function finalizarPedido() {
+        const carrinho = ler("carrinho", []);
+        const usuario = ler("usuarioLogado", null);
+
+        if (carrinho.length === 0) {
+            mostrarMensagem(
+                "mensagemCheckout",
+                "Seu carrinho está vazio.",
+                "danger"
+            );
+            return;
+        }
+
+        if (usuario === null) {
+            alert("Faça login antes de finalizar a compra.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        const cep = formatarCep(
+            document.getElementById("cepEntrega").value
+        );
+
+        const metodo =
+            document.getElementById("metodoPagamento").value;
+
+        const numeroCartao =
+            document.getElementById("numeroCartao").value.replace(/\D/g, "");
+
+        if (!/^\d{5}-\d{3}$/.test(cep)) {
+            mostrarMensagem(
+                "mensagemCheckout",
+                "Informe um CEP válido.",
+                "danger"
+            );
+            return;
+        }
+
+        if (freteSelecionado === null) {
+            mostrarMensagem(
+                "mensagemCheckout",
+                "Calcule e selecione o frete.",
+                "danger"
+            );
+            return;
+        }
+
+        if (metodo === "") {
+            mostrarMensagem(
+                "mensagemCheckout",
+                "Selecione a forma de pagamento.",
+                "danger"
+            );
+            return;
+        }
+
+        if (metodo === "cartao" && numeroCartao === "") {
+            mostrarMensagem(
+                "mensagemCheckout",
+                "Informe o número do cartão.",
+                "danger"
+            );
+            return;
+        }
+
+        // PREPARAR OS ITENS PARA A API
+
+        const itens = [];
+
+        for (let i = 0; i < carrinho.length; i++) {
+            itens.push({
+                id: Number(carrinho[i].id),
+                quantidade: Number(carrinho[i].quantidade)
+            });
+        }
+
+        const dadosCompra = {
+            itens: itens,
+            cep: cep,
+            metodoPagamento: metodo
+        };
+
+        if (metodo === "cartao") {
+            dadosCompra.numeroCartao = numeroCartao;
+        }
+
+        const botao = document.getElementById("finalizarCompra");
+
+        botao.disabled = true;
+
+        try {
+            const resposta = await fetch(API_URL + "/api/checkout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dadosCompra)
             });
 
-            localStorage.setItem("pedidos", JSON.stringify(pedidos));
+            const dados = await resposta.json();
+
+            if (resposta.status === 400) {
+                mostrarMensagem(
+                    "mensagemCheckout",
+                    dados.mensagem,
+                    "danger"
+                );
+                return;
+            }
+
+            if (resposta.status === 402) {
+                mostrarMensagem(
+                    "mensagemCheckout",
+                    "Pagamento recusado.",
+                    "danger"
+                );
+                return;
+            }
+
+            if (resposta.status === 404) {
+                mostrarMensagem(
+                    "mensagemCheckout",
+                    "Produto não encontrado.",
+                    "danger"
+                );
+                return;
+            }
+
+            if (resposta.status === 422) {
+                mostrarMensagem(
+                    "mensagemCheckout",
+                    "Estoque insuficiente.",
+                    "danger"
+                );
+                return;
+            }
+
+            if (resposta.status !== 201) {
+                mostrarMensagem(
+                    "mensagemCheckout",
+                    "Erro HTTP " + resposta.status,
+                    "danger"
+                );
+                return;
+            }
+
+            // PEDIDO RETORNADO PELA API
+
+            const pedidoAPI = dados.pedido;
+            const resumo = calcularResumo();
+
+            const pedido = {
+                protocolo: pedidoAPI.protocolo,
+                status: pedidoAPI.status,
+                cep: pedidoAPI.cep,
+                metodoPagamento: pedidoAPI.metodoPagamento,
+                totalItens: pedidoAPI.totalItens,
+                valorProdutos: pedidoAPI.valorProdutos,
+
+                valorFinal: resumo.total,
+                frete: resumo.frete,
+                desconto: resumo.desconto,
+
+                itens: carrinho,
+                email: usuario.email,
+                data: new Date().toLocaleString("pt-BR")
+            };
+
+            if (cupomAplicado !== null) {
+                pedido.cupom = cupomAplicado.codigo;
+            } else {
+                pedido.cupom = "";
+            }
+
+            // GUARDAR O PEDIDO NO NAVEGADOR
+
+            const pedidos = ler("pedidos", []);
+
+            pedidos.push(pedido);
+
+            gravar("pedidos", pedidos);
+            gravar("ultimoPedido", pedido);
+
             localStorage.removeItem("carrinho");
 
             window.location.href = "sucesso-pedido.html";
-        }
 
-        atualizarMenuUsuario();
-        mostrarCarrinho();
-    </script>
+        } catch (erro) {
+            mostrarMensagem(
+                "mensagemCheckout",
+                "Erro de conexão. Seu carrinho foi preservado.",
+                "danger"
+            );
+
+        } finally {
+            botao.disabled = false;
+        }
+    }
+
+    // INICIAR A PÁGINA
+
+    atualizarCabecalho();
+    renderizarCarrinho();
+
+</script>
+
 </body>
 </html>
